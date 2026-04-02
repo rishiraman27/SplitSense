@@ -38,7 +38,7 @@ Make sure you have Node.js and MongoDB installed on your machine. You will also 
 
 ### 2. Clone the Repository
 \`\`\`bash
-git clone https://github.com/yourusername/splitsense.git
+git clone https://github.com/rishiraman27/SplitSense.git
 cd splitsense
 \`\`\`
 
