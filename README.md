@@ -10,7 +10,7 @@ An intelligent, full-stack financial application built with the MERN stack that 
 
 * **🤖 Magic AI Entry:** Type natural language like *"I spent $45 on pizza with John"* and the Gemini AI engine automatically extracts the amount, categorizes it as "Food & Drink," and calculates the perfect split.
 * **🧠 AI Financial Advisor:** The backend dynamically calculates your out-of-pocket spending across categories and generates personalized, contextual financial insights using Gemini 2.5 Flash.
-* **💎 Pro Fintech UI:** Features a custom-built, high-performance interface utilizing Glassmorphism, modern design principles, and monospaced financial typography for a true terminal-grade experience.
+
 * **👤 Unified Ledger:** Seamlessly handles complex group splits, 1-on-1 friend debts, and solitary "Personal Only" expenses in a single, high-performance database schema.
 * **📊 Real-Time Telemetry:** Dashboard features interactive SVG charts (`recharts`) and instant net-balance calculations.
 
