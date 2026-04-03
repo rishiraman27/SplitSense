@@ -2,11 +2,15 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import API from '../api/axiosConfig';
 import { X, CheckCircle2, DollarSign, User } from 'lucide-react';
+import { useCurrencyStore } from '../store/useCurrencyStore';
+
+
 
 export default function SettleUpModal({ isOpen, onClose, onSuccess }) {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { symbol } = useCurrencyStore();
 
   useEffect(() => {
     if (isOpen) {
@@ -87,12 +91,12 @@ export default function SettleUpModal({ isOpen, onClose, onSuccess }) {
 
             <div>
               <label className="mb-1.5 flex items-center gap-1.5 text-sm font-semibold text-gray-700">
-                <DollarSign size={14} className="text-teal-500"/> Amount Paid
+                <span className="text-teal-500 text-base">{symbol}</span> Amount Paid
               </label>
               <input
                 type="number"
                 step="0.01"
-                placeholder="0.00"
+                placeholder={`${symbol} 0.00`}
                 {...register('amount', { required: true, min: 0.01 })}
                 className="w-full rounded-xl border border-gray-200 bg-gray-50 p-3 text-3xl font-bold text-gray-900 focus:border-teal-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-teal-500/10"
               />

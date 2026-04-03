@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import API from '../api/axiosConfig';
 import { useAuthStore } from '../store/useAuthStore';
+import { useCurrencyStore } from '../store/useCurrencyStore';
 import { Receipt, ArrowUpRight, ArrowDownLeft, Clock } from 'lucide-react'; // Beautiful modern icons
+
+
 
 // Helper 1: Generate initials from a full name
 const getInitials = (name) => {
@@ -26,6 +29,7 @@ export default function ExpenseFeed({ refreshTrigger }) {
   const [expenses, setExpenses] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuthStore();
+  const { symbol } = useCurrencyStore();
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -114,7 +118,7 @@ export default function ExpenseFeed({ refreshTrigger }) {
                   <div>
                     <p className="font-semibold text-gray-900">{expense.description || 'Payment'}</p>
                     <p className="text-sm text-gray-500">
-                      {iPaid ? 'You' : payerName} paid <span className="font-medium text-gray-700">${totalAmount.toFixed(2)}</span>
+                      {iPaid ? 'You' : payerName} paid <span className="font-medium text-gray-700">{symbol}{totalAmount.toFixed(2)}</span>
                     </p>
                   </div>
                 </div>
@@ -124,7 +128,7 @@ export default function ExpenseFeed({ refreshTrigger }) {
                   <p className="text-sm font-medium text-gray-500">{iPaid ? 'You lent' : 'You borrowed'}</p>
                   <div className={`flex items-center justify-end gap-1 font-bold ${iPaid ? 'text-emerald-500' : 'text-rose-500'}`}>
                     {iPaid ? <ArrowUpRight size={16} /> : <ArrowDownLeft size={16} />}
-                    ${actualSplitAmount.toFixed(2)}
+                    {symbol}{actualSplitAmount.toFixed(2)}
                   </div>
                 </div>
               </li>

@@ -7,12 +7,14 @@ import SettleUpModal from '../components/SettleUpModal';
 import ExpenseFeed from '../components/ExpenseFeed';
 import ExpenseChart from '../components/ExpenseChart';
 import AIInsightsWidget from '../components/AIInsightsWidget';
+import { useCurrencyStore } from '../store/useCurrencyStore';
 
 // NEW: Importing beautiful modern icons!
-import { LogOut, Users, UserPlus, PlusCircle, CheckCircle2, Wallet, TrendingUp, TrendingDown, Settings, CreditCard } from 'lucide-react';
+import { LogOut, Users, UserPlus, PlusCircle, CheckCircle2, Wallet, TrendingUp, TrendingDown, Settings, CreditCard, IndianRupee, DollarSign } from 'lucide-react';
 
 export default function Dashboard() {
   const { user, setLogout } = useAuthStore();
+  const { symbol, currency, toggleCurrency } = useCurrencyStore();
   const navigate = useNavigate();
   
   const [balances, setBalances] = useState({ totalOwedToMe: 0, totalIOwe: 0, netBalance: 0, totalPersonalSpending: 0 });
@@ -75,6 +77,13 @@ export default function Dashboard() {
             <Link to="/account" className="flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm ring-1 ring-inset ring-gray-200 transition-all hover:bg-gray-50">
               <Settings size={18} className="text-gray-500" /> Account
             </Link>
+            <button 
+              onClick={toggleCurrency} 
+              title={`Switch to ${currency === 'USD' ? 'INR' : 'USD'}`}
+              className="flex items-center justify-center rounded-full bg-white p-2.5 text-gray-600 shadow-sm ring-1 ring-inset ring-gray-200 transition-all hover:bg-gray-50 dark:border dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:ring-0 dark:backdrop-blur-md dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              {currency === 'USD' ? <DollarSign size={18} /> : <IndianRupee size={18} />}
+            </button>
             <button onClick={handleLogout} className="flex items-center gap-2 rounded-full bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-gray-800">
               <LogOut size={18} /> Exit
             </button>
@@ -93,7 +102,7 @@ export default function Dashboard() {
               </div>
             </div>
             <p className={`text-4xl font-extrabold tracking-tight ${balances.netBalance >= 0 ? 'text-gray-900' : 'text-red-600'}`}>
-              ${Math.abs(balances.netBalance).toFixed(2)} 
+              {symbol}{Math.abs(balances.netBalance).toFixed(2)} 
             </p>
             <p className="mt-1 text-sm font-medium text-gray-400">
               {balances.netBalance < 0 ? 'You are in the red' : 'You are in the green'}
@@ -109,7 +118,7 @@ export default function Dashboard() {
               </div>
             </div>
             <p className="text-4xl font-extrabold tracking-tight text-red-500">
-              ${balances.totalIOwe.toFixed(2)}
+              {symbol}{balances.totalIOwe.toFixed(2)}
             </p>
           </div>
 
@@ -122,7 +131,7 @@ export default function Dashboard() {
               </div>
             </div>
             <p className="text-4xl font-extrabold tracking-tight text-emerald-500">
-              ${balances.totalOwedToMe.toFixed(2)}
+              {symbol}{balances.totalOwedToMe.toFixed(2)}
             </p>
           </div>
           <div className="group rounded-3xl border border-gray-100 bg-white p-6 shadow-sm transition-all hover:shadow-md">
@@ -133,7 +142,7 @@ export default function Dashboard() {
               </div>
             </div>
             <p className="text-4xl font-extrabold tracking-tight text-indigo-500">
-              ${(balances.totalPersonalSpending || 0).toFixed(2)}
+              {symbol}{(balances.totalPersonalSpending || 0).toFixed(2)}
             </p>
           </div>
 

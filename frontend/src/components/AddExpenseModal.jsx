@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import API from '../api/axiosConfig';
 import { useAuthStore } from '../store/useAuthStore';
+import { useCurrencyStore } from '../store/useCurrencyStore';
 import { X, User, Users, Receipt, Tag, DollarSign, Sparkles, Loader2, UserMinus } from 'lucide-react';
 
 export default function AddExpenseModal({ isOpen, onClose, onSuccess }) {
@@ -10,6 +11,7 @@ export default function AddExpenseModal({ isOpen, onClose, onSuccess }) {
   });
   
   const { user } = useAuthStore();
+  const { symbol } = useCurrencyStore();
   const [friends, setFriends] = useState([]);
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -134,7 +136,7 @@ export default function AddExpenseModal({ isOpen, onClose, onSuccess }) {
             <div className="flex gap-2">
               <input
                 type="text"
-                placeholder="e.g. I paid $12 for lunch"
+                placeholder={`e.g., "I spent ${symbol}45 on pizza with John"`}
                 value={aiText}
                 onChange={(e) => setAiText(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleAIParsing()}
